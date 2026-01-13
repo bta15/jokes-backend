@@ -1,0 +1,10 @@
+
+### import file
+POST http://localhost:8080/import/csv
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="jokes.csv"
+
+< ./jokes.csv
+--boundary--

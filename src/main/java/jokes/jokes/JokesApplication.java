@@ -14,14 +14,4 @@ public class JokesApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(JokesApplication.class, args);
 	}
-
-	@Bean
-	public CommandLineRunner demo(JokeRepository repository) {
-		return (_) -> {
-			Joke joke = new Joke();
-			joke.setCategory(JokeCategory.GENERAL);
-			joke.setText("Hello World!");
-			repository.save(joke);
-		};
-	}
 }
