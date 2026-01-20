@@ -4,6 +4,7 @@ import jokes.jokes.database.entity.Joke;
 import jokes.jokes.database.entity.JokeCategory;
 import jokes.jokes.service.JokeImportService;
 import jokes.jokes.service.JokeService;
+import jokes.jokes.service.csv.CsvJoke;
 import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,9 @@ public class JokeController {
     @Autowired
     private JokeImportService jokeImportService;
 
-    @GetMapping("/general")
-    public List<Joke> getAllJokes() {
-        return jokeService.getAllJokes(JokeCategory.GENERAL);
+    @GetMapping("/all")
+    public List<CsvJoke> getAllJokes() {
+        return jokeService.getAllJokes();
     }
 
     @PostMapping("/import/csv")

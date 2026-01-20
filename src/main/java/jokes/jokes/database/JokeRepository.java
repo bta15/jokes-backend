@@ -10,8 +10,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface JokeRepository extends CrudRepository<Joke, Long> {
+public interface JokeRepository extends JpaRepository<Joke, Long> {
 
     List<Joke> findAllByCategory(JokeCategory category);
+
+    boolean existsByText(String text);
 
 }

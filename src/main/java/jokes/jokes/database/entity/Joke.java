@@ -21,9 +21,9 @@ public class Joke {
     private Long id;
 
     @Column(name = "text")
-    private String text;
+    private String text; //TODO umbenennen
 
     @Enumerated(EnumType.STRING)
     @Column(name = "category")
-    private JokeCategory category;
+    private JokeCategory category; // TODO umbenennen
 }
