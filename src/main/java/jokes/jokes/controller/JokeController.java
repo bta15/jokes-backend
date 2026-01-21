@@ -1,6 +1,7 @@
 package jokes.jokes.controller;
 
 import jokes.jokes.controller.dto.JokeDto;
+import jokes.jokes.database.entity.JokeEntity;
 import jokes.jokes.service.JokeImportService;
 import jokes.jokes.service.JokeService;
 import jokes.jokes.service.csv.CsvJoke;
@@ -12,7 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
-@RestController("api/joke")
+@RestController
+@RequestMapping("api/jokes")
 public class JokeController {
 
     @Autowired
@@ -22,7 +24,7 @@ public class JokeController {
     private JokeImportService jokeImportService;
 
     @GetMapping("/all")
-    public List<CsvJoke> getAll() {
+    public List<JokeEntity> getAll() {
         return jokeService.getAllJokes();
     }
 
@@ -38,8 +40,13 @@ public class JokeController {
         return ResponseEntity.ok().body("success");
     }
 
+    @PostMapping
+    public ResponseEntity<JokeEntity> create(@RequestBody JokeDto jokeDto) {
+        return ResponseEntity.ok(jokeService.create(jokeDto));
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<JokeDto> update(@PathVariable("id") Long id, @RequestBody JokeDto updateJoke) throws IOException {
+    public ResponseEntity<JokeEntity> update(@PathVariable("id") Long id, @RequestBody JokeDto updateJoke) throws IOException {
         var updated = jokeService.update(id, updateJoke);
         return ResponseEntity.ok(updated);
     }

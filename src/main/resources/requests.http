@@ -1,6 +1,6 @@
 
 ### import file
-POST http://localhost:8080/import/csv
+POST http://localhost:8080/api/jokes/import/csv
 Content-Type: multipart/form-data; boundary=boundary
 
 --boundary
@@ -10,4 +10,34 @@ Content-Disposition: form-data; name="file"; filename="jokeEntities.csv"
 --boundary--
 
 ### get all jokeEntities
-GET localhost:8080/all
+GET localhost:8080/api/jokes/all
+
+### update
+PUT localhost:8080/api/jokes/1
+Content-Type: application/json
+
+{
+  "witz": "huhu",
+  "kategorie": "JOB"
+}
+
+### create 1
+POST localhost:8080/api/jokes
+Content-Type: application/json
+
+{
+  "witz": "Schüler: „Ich hab die Hausaufgaben wirklich gemacht!“ Lehrer: „Und warum sind sie dann nicht da?“Schüler: „Cloud-Probleme. Kopf-Cloud.“",
+  "kategorie": "SCHULE"
+}
+
+### create 2
+POST localhost:8080/api/jokes
+Content-Type: application/json
+
+{
+  "witz": "Lehrer: „Du hast schon wieder geschlafen!“ Schüler: „Nein, ich hab nur meine Augen aktualisiert.“",
+  "kategorie": "SCHULE"
+}
+
+
+

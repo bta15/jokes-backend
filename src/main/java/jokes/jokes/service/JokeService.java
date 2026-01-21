@@ -16,26 +16,24 @@ public class JokeService {
     @Autowired
     private JokeRepository jokeRepository;
 
-    public List<CsvJoke> getAllJokes() {
-        List<JokeEntity> jokeEntities = jokeRepository.findAll();
-        List<CsvJoke> csvJokes = new ArrayList<>();
-        jokeEntities.forEach(joke -> {
-            CsvJoke csvJoke = new CsvJoke();
-            csvJoke.setJoke(joke.getWitz());
-            csvJoke.setCategory(joke.getKategorie().name().toLowerCase());
-            csvJokes.add(csvJoke);
-        });
-        return csvJokes;
+    public List<JokeEntity> getAllJokes() {
+        return jokeRepository.findAll();
     }
 
-    public JokeDto update(Long id, JokeDto jokeDto) {
+    public JokeEntity create(JokeDto jokeDto) {
+        JokeEntity jokeEntity = new JokeEntity();
+        jokeEntity.setWitz(jokeDto.witz());
+        jokeEntity.setKategorie(jokeDto.kategorie());
+        return jokeRepository.save(jokeEntity);
+    }
+
+    public JokeEntity update(Long id, JokeDto jokeDto) {
         var stored = jokeRepository.findById(id);
         if (stored.isPresent()) {
             JokeEntity jokeEntity = stored.get();
             jokeEntity.setKategorie(jokeDto.kategorie());
             jokeEntity.setWitz(jokeDto.witz());
-            var updated = jokeRepository.save(jokeEntity);
-            return new JokeDto(updated.getWitz(), updated.getKategorie());
+            return jokeRepository.save(jokeEntity);
         } else {
             System.out.println("Joke not found");
             return null;
