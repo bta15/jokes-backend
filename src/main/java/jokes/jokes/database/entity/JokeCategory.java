@@ -1,5 +1,5 @@
 package jokes.jokes.database.entity;
 
 public enum JokeCategory {
-    JOB, KIDS, ANIMAL, GENERAL
+    JOB, SCHULE, WINTER, WEIHNACHTEN, OSTERN, ALLGEMEIN
 }

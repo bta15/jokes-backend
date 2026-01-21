@@ -4,7 +4,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvParser;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import jokes.jokes.database.JokeRepository;
-import jokes.jokes.database.entity.Joke;
+import jokes.jokes.database.entity.JokeEntity;
 import jokes.jokes.database.entity.JokeCategory;
 import jokes.jokes.service.csv.CsvJoke;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class JokeImportService {
     @Autowired
     private JokeRepository jokeRepository;
 
-    public void importJokes(InputStreamSource file) throws IOException {
+    public void importCsv(InputStreamSource file) throws IOException {
         CsvMapper mapper = new CsvMapper().enable(CsvParser.Feature.WRAP_AS_ARRAY);
         CsvSchema schema = mapper.typedSchemaFor(CsvJoke.class).withHeader().withColumnSeparator(';');
 
@@ -32,17 +32,17 @@ public class JokeImportService {
 
         csvJokes.forEach(System.out::println);
 
-        List<Joke> newJokeList = new ArrayList<>();
+        List<JokeEntity> newJokeEntityList = new ArrayList<>();
         csvJokes.forEach(newJoke -> {
-            if (newJoke.getJoke() != null && !newJoke.getJoke().isEmpty() && jokeRepository.existsByText(newJoke.getJoke())) {
+            if (newJoke.getJoke() != null && !newJoke.getJoke().isEmpty() && jokeRepository.existsByWitz(newJoke.getJoke())) {
                 return;
             }
             JokeCategory newCategory = JokeCategory.valueOf(newJoke.getCategory().toUpperCase());
-            Joke joke = new Joke();
-            joke.setCategory(newCategory);
-            joke.setText(newJoke.getJoke());
-            newJokeList.add(joke);
+            JokeEntity jokeEntity = new JokeEntity();
+            jokeEntity.setKategorie(newCategory);
+            jokeEntity.setWitz(newJoke.getJoke());
+            newJokeEntityList.add(jokeEntity);
         });
-        jokeRepository.saveAll(newJokeList);
+        jokeRepository.saveAll(newJokeEntityList);
     }
 }

@@ -1,12 +1,7 @@
 package jokes.jokes;
 
-import jokes.jokes.database.JokeRepository;
-import jokes.jokes.database.entity.Joke;
-import jokes.jokes.database.entity.JokeCategory;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class JokesApplication {

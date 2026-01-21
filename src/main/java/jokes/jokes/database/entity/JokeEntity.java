@@ -13,17 +13,17 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table( name="joke" )
-public class Joke {
+public class JokeEntity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "text")
-    private String text; //TODO umbenennen
+    @Column(name = "witz")
+    private String witz;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "category")
-    private JokeCategory category; // TODO umbenennen
+    @Column(name = "kategorie")
+    private JokeCategory kategorie;
 }
