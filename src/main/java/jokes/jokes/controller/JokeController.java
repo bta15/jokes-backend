@@ -4,7 +4,6 @@ import jokes.jokes.controller.dto.JokeDto;
 import jokes.jokes.database.entity.JokeEntity;
 import jokes.jokes.service.JokeImportService;
 import jokes.jokes.service.JokeService;
-import jokes.jokes.service.csv.CsvJoke;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,7 +45,7 @@ public class JokeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<JokeEntity> update(@PathVariable("id") Long id, @RequestBody JokeDto updateJoke) throws IOException {
+    public ResponseEntity<JokeEntity> update(@PathVariable("id") Long id, @RequestBody JokeDto updateJoke) {
         var updated = jokeService.update(id, updateJoke);
         return ResponseEntity.ok(updated);
     }
@@ -54,6 +53,11 @@ public class JokeController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         jokeService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/like")
+    public ResponseEntity<JokeEntity> like(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(jokeService.like(id));
     }
 }

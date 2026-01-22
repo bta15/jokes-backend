@@ -21,6 +21,10 @@ Content-Type: application/json
   "kategorie": "JOB"
 }
 
+### like
+PATCH localhost:8080/api/jokes/102000/like
+
+
 ### create 1
 POST localhost:8080/api/jokes
 Content-Type: application/json

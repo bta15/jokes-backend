@@ -26,4 +26,7 @@ public class JokeEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "kategorie")
     private JokeCategory kategorie;
+
+    @Column(name = "likes")
+    private Integer likes = 0;
 }

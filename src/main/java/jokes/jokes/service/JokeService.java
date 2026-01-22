@@ -3,11 +3,9 @@ package jokes.jokes.service;
 import jokes.jokes.controller.dto.JokeDto;
 import jokes.jokes.database.JokeRepository;
 import jokes.jokes.database.entity.JokeEntity;
-import jokes.jokes.service.csv.CsvJoke;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,6 +13,15 @@ public class JokeService {
 
     @Autowired
     private JokeRepository jokeRepository;
+
+    public JokeEntity getJoke(Long id) {
+        var joke = jokeRepository.findById(id);
+        if (joke.isPresent()) {
+            return joke.get();
+        } else {
+            throw new JokeNotFoundException("Joke with id " + id + " not found");
+        }
+    }
 
     public List<JokeEntity> getAllJokes() {
         return jokeRepository.findAll();
@@ -35,12 +42,17 @@ public class JokeService {
             jokeEntity.setWitz(jokeDto.witz());
             return jokeRepository.save(jokeEntity);
         } else {
-            System.out.println("Joke not found");
-            return null;
+            throw new JokeNotFoundException("Joke with id " + id + " not found");
         }
     }
 
     public void delete(Long id) {
         jokeRepository.deleteById(id);
+    }
+
+    public JokeEntity like(Long id) {
+        var joke = getJoke(id);
+        joke.setLikes(joke.getLikes() == null ? 1 : joke.getLikes() + 1);
+        return jokeRepository.save(joke);
     }
 }
