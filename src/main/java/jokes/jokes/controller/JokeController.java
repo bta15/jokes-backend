@@ -73,4 +73,9 @@ public class JokeController {
     public JokeEntity getJokeOfTheDay() {
         return jokeService.getJokeOfTheDay();
     }
+
+    @GetMapping("/top")
+    public List<JokeEntity> getTop() {
+        return jokeService.getTop();
+    }
 }

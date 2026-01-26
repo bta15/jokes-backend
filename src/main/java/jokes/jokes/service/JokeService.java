@@ -61,6 +61,10 @@ public class JokeService {
         return jokeRepository.save(joke);
     }
 
+    public List<JokeEntity> getTop() {
+        return jokeRepository.findTop5ByOrderByLikesDesc();
+    }
+
     public JokeEntity getRandomJokeByCategory(JokeCategory category) {
         var jokes = jokeRepository.findAllByKategorie(category);
         if (jokes.isEmpty()) {

@@ -25,7 +25,7 @@ Content-Type: application/json
 }
 
 ### like
-PATCH localhost:8080/api/jokes/102000/like
+PATCH localhost:8080/api/jokes/153/like
 
 
 ### create 1
@@ -48,6 +48,9 @@ Content-Type: application/json
 
 ### joke of the day
 GET localhost:8080/api/jokes/today
+
+### Top 5 ordered by likes
+GET localhost:8080/api/jokes/top
 
 
 

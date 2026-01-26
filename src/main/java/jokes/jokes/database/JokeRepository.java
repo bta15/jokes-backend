@@ -14,4 +14,6 @@ public interface JokeRepository extends JpaRepository<JokeEntity, Long> {
 
     boolean existsByWitz(String witz);
 
+    List<JokeEntity> findTop5ByOrderByLikesDesc();
+
 }
