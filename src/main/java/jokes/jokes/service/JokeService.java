@@ -2,14 +2,17 @@ package jokes.jokes.service;
 
 import jokes.jokes.controller.dto.JokeDto;
 import jokes.jokes.database.JokeRepository;
+import jokes.jokes.database.entity.JokeCategory;
 import jokes.jokes.database.entity.JokeEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 
+@Log
 @Service
 @RequiredArgsConstructor
 public class JokeService {
@@ -56,5 +59,38 @@ public class JokeService {
         var joke = getJoke(id);
         joke.setLikes(joke.getLikes() == null ? 1 : joke.getLikes() + 1);
         return jokeRepository.save(joke);
+    }
+
+    public JokeEntity getJokeOfTheDay() {
+        var category = getCategoryOfTheDay();
+        var jokes = jokeRepository.findAllByKategorie(category);
+        if (jokes.isEmpty()) {
+            throw new JokeNotFoundException("No jokes found for category " + category);
+        }
+
+        return getRandomJoke(jokes);
+    }
+
+    private JokeEntity getRandomJoke(List<JokeEntity> jokes) {
+        var random = new Random();
+        var randomIndex =  random.nextInt(jokes.size());
+        return jokes.get(randomIndex);
+    }
+
+    private JokeCategory getCategoryOfTheDay() {
+        var today = LocalDate.now();
+        var christmasStart = LocalDate.of(today.getYear(), 12, 1);
+        var christmasEnd = LocalDate.of(today.getYear(), 12, 26);
+        if (isBetween(today, christmasStart, christmasEnd)) {
+            return JokeCategory.WEIHNACHTEN;
+        } else {
+            log.warning("No joke category found for today. Returning general category.");
+            return JokeCategory.ALLGEMEIN;
+        }
+        //TODO check/add more categories here
+    }
+
+    private boolean isBetween(LocalDate date, LocalDate start, LocalDate end) {
+        return !date.isBefore(start) && !date.isAfter(end);
     }
 }

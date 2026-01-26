@@ -39,6 +39,8 @@ public class JokeController {
         return ResponseEntity.ok().body("success");
     }
 
+    //TODO add export as csv file
+
     @PostMapping
     public ResponseEntity<JokeEntity> create(@RequestBody JokeDto jokeDto) {
         return ResponseEntity.ok(jokeService.create(jokeDto));
@@ -59,5 +61,10 @@ public class JokeController {
     @PatchMapping("/{id}/like")
     public ResponseEntity<JokeEntity> like(@PathVariable("id") Long id) {
         return ResponseEntity.ok(jokeService.like(id));
+    }
+
+    @GetMapping("/today")
+    public JokeEntity getJokeOfTheDay() {
+        return jokeService.getJokeOfTheDay();
     }
 }
