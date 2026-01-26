@@ -12,6 +12,9 @@ Content-Disposition: form-data; name="file"; filename="jokeEntities.csv"
 ### get all jokeEntities
 GET localhost:8080/api/jokes/all
 
+### get random by category
+GET localhost:8080/api/jokes/random?category=WEIHNACHTEN
+
 ### update
 PUT localhost:8080/api/jokes/1
 Content-Type: application/json

@@ -61,6 +61,14 @@ public class JokeService {
         return jokeRepository.save(joke);
     }
 
+    public JokeEntity getRandomJokeByCategory(JokeCategory category) {
+        var jokes = jokeRepository.findAllByKategorie(category);
+        if (jokes.isEmpty()) {
+            throw new JokeNotFoundException("No jokes found for category " + category);
+        }
+        return getRandomJoke(jokes);
+    }
+
     public JokeEntity getJokeOfTheDay() {
         var category = getCategoryOfTheDay();
         var jokes = jokeRepository.findAllByKategorie(category);

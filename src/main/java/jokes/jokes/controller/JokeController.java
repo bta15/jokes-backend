@@ -1,6 +1,7 @@
 package jokes.jokes.controller;
 
 import jokes.jokes.controller.dto.JokeDto;
+import jokes.jokes.database.entity.JokeCategory;
 import jokes.jokes.database.entity.JokeEntity;
 import jokes.jokes.service.JokeImportService;
 import jokes.jokes.service.JokeService;
@@ -25,6 +26,11 @@ public class JokeController {
     @GetMapping("/all")
     public List<JokeEntity> getAll() {
         return jokeService.getAllJokes();
+    }
+
+    @GetMapping("/random")
+    public JokeEntity getRandomByCategory(@RequestParam JokeCategory category) {
+        return jokeService.getRandomJokeByCategory(category);
     }
 
     @PostMapping("/import/csv")
