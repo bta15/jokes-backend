@@ -1,9 +1,10 @@
 package jokes.jokes.service;
 
 import jokes.jokes.controller.dto.JokeDto;
-import jokes.jokes.database.JokeRepository;
-import jokes.jokes.database.entity.JokeCategory;
-import jokes.jokes.database.entity.JokeEntity;
+import jokes.jokes.repository.JokeRepository;
+import jokes.jokes.entity.JokeCategory;
+import jokes.jokes.entity.JokeEntity;
+import jokes.jokes.service.exception.JokeNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package jokes.jokes.database.entity;
+package jokes.jokes.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

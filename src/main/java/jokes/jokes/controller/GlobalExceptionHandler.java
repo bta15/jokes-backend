@@ -1,7 +1,7 @@
 package jokes.jokes.controller;
 
 import jokes.jokes.controller.dto.ErrorDto;
-import jokes.jokes.service.JokeNotFoundException;
+import jokes.jokes.service.exception.JokeNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

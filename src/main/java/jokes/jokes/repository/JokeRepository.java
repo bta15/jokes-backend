@@ -1,7 +1,7 @@
-package jokes.jokes.database;
+package jokes.jokes.repository;
 
-import jokes.jokes.database.entity.JokeEntity;
-import jokes.jokes.database.entity.JokeCategory;
+import jokes.jokes.entity.JokeEntity;
+import jokes.jokes.entity.JokeCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

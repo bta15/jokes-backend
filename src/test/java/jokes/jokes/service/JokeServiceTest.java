@@ -1,7 +1,7 @@
 package jokes.jokes.service;
 
-import jokes.jokes.database.JokeRepository;
-import jokes.jokes.database.entity.JokeEntity;
+import jokes.jokes.repository.JokeRepository;
+import jokes.jokes.entity.JokeEntity;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

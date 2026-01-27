@@ -2,21 +2,16 @@ package jokes.jokes.service;
 
 import com.fasterxml.jackson.dataformat.csv.CsvGenerator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
-import com.fasterxml.jackson.dataformat.csv.CsvParser;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import jokes.jokes.database.JokeRepository;
-import jokes.jokes.database.entity.JokeCategory;
-import jokes.jokes.database.entity.JokeEntity;
+import jokes.jokes.repository.JokeRepository;
 import jokes.jokes.service.csv.CsvJoke;
+import jokes.jokes.service.exception.JokeNotFoundException;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.InputStreamSource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Log
 @Service

@@ -1,8 +1,8 @@
 package jokes.jokes.controller;
 
 import jokes.jokes.controller.dto.JokeDto;
-import jokes.jokes.database.entity.JokeCategory;
-import jokes.jokes.database.entity.JokeEntity;
+import jokes.jokes.entity.JokeCategory;
+import jokes.jokes.entity.JokeEntity;
 import jokes.jokes.service.JokeExportService;
 import jokes.jokes.service.JokeImportService;
 import jokes.jokes.service.JokeService;
