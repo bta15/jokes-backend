@@ -1,15 +1,15 @@
 package jokes.jokes.service;
 
 import jokes.jokes.controller.dto.JokeDto;
-import jokes.jokes.repository.JokeRepository;
 import jokes.jokes.entity.JokeCategory;
 import jokes.jokes.entity.JokeEntity;
+import jokes.jokes.repository.JokeRepository;
 import jokes.jokes.service.exception.JokeNotFoundException;
+import jokes.jokes.util.JokeCategoryUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 
@@ -91,19 +91,6 @@ public class JokeService {
     }
 
     private JokeCategory getCategoryOfTheDay() {
-        var today = LocalDate.now();
-        var christmasStart = LocalDate.of(today.getYear(), 12, 1);
-        var christmasEnd = LocalDate.of(today.getYear(), 12, 26);
-        if (isBetween(today, christmasStart, christmasEnd)) {
-            return JokeCategory.WEIHNACHTEN;
-        } else {
-            log.warning("No joke category found for today. Returning general category.");
-            return JokeCategory.ALLGEMEIN;
-        }
-        //TODO check/add more categories here
-    }
-
-    private boolean isBetween(LocalDate date, LocalDate start, LocalDate end) {
-        return !date.isBefore(start) && !date.isAfter(end);
+        return JokeCategoryUtil.getCategory();
     }
 }
