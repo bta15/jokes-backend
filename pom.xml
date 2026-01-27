@@ -8,10 +8,10 @@
 		<version>4.0.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>jokeEntities</groupId>
-	<artifactId>jokeEntities</artifactId>
+	<groupId>jokes-backend</groupId>
+	<artifactId>jokes-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>jokeEntities</name>
+	<name>jokes-backend</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
