@@ -9,6 +9,10 @@ Content-Disposition: form-data; name="file"; filename="jokeEntities.csv"
 < ./jokes.csv
 --boundary--
 
+### export file
+GET localhost:8080/api/jokes/export/csv
+
+
 ### get all jokeEntities
 GET localhost:8080/api/jokes/all
 

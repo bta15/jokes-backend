@@ -3,14 +3,18 @@ package jokes.jokes.controller;
 import jokes.jokes.controller.dto.JokeDto;
 import jokes.jokes.database.entity.JokeCategory;
 import jokes.jokes.database.entity.JokeEntity;
+import jokes.jokes.service.JokeExportService;
 import jokes.jokes.service.JokeImportService;
 import jokes.jokes.service.JokeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -22,6 +26,9 @@ public class JokeController {
 
     @Autowired
     private JokeImportService jokeImportService;
+
+    @Autowired
+    private JokeExportService jokeExportService;
 
     @GetMapping("/all")
     public List<JokeEntity> getAll() {
@@ -45,7 +52,15 @@ public class JokeController {
         return ResponseEntity.ok().body("success");
     }
 
-    //TODO add export as csv file
+    @GetMapping("/export/csv")
+    public ResponseEntity<Resource> exportCsvFile() throws IOException {
+        var csvContent = jokeExportService.exportCsv();
+        var filename = "witze_export_" + LocalDateTime.now() + ".csv";
+        return ResponseEntity.ok().header("Content-Disposition", "filename=" + filename)
+                .contentLength(csvContent.contentLength())
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(csvContent);
+    }
 
     @PostMapping
     public ResponseEntity<JokeEntity> create(@RequestBody JokeDto jokeDto) {
