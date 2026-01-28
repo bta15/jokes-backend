@@ -43,8 +43,16 @@ class JokeControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    private static final String ID = "1";
+
+    private static final String GENERAL_URL = "/api/jokes";
     private static final String EXPORT_URL = "/api/jokes/export/csv";
     private static final String IMPORT_URL = "/api/jokes/import/csv";
+    private static final String GET_ALL_URL = "/api/jokes/all";
+    private static final String GET_RANDOM_URL = "/api/jokes/random";
+    private static final String LIKE_URL = "/api/jokes/" + ID + "/today";
+    private static final String TODAY_URL = "/api/jokes/today";
+    private static final String TOP_URL = "/api/jokes/top";
 
 
     @Test
@@ -71,5 +79,45 @@ class JokeControllerTest {
         assertEquals("application/octet-stream", result.getResponse().getContentType());
         assertNotNull(result.getResponse().getHeader("Content-Disposition"));
         verify(jokeExportService).exportCsv();
+    }
+
+    @Test
+    void getAll() {
+        //TODO
+    }
+
+    @Test
+    void getRandomByCategory() {
+        //TODO
+    }
+
+    @Test
+    void create() {
+        //TODO
+    }
+
+    @Test
+    void update() {
+        //TODO
+    }
+
+    @Test
+    void delete() {
+        //TODO
+    }
+
+    @Test
+    void like() {
+        //TODO
+    }
+
+    @Test
+    void getJokeOfTheDay() {
+        //TODO
+    }
+
+    @Test
+    void getTopJokes() {
+        //TODO
     }
 }
