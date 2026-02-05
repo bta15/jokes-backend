@@ -32,22 +32,13 @@ Content-Type: application/json
 PATCH localhost:8080/api/jokes/153/like
 
 
-### create 1
+### create
 POST localhost:8080/api/jokes
 Content-Type: application/json
 
 {
   "witz": "Warum ging der Kalender zum Arzt? Seine Tage waren gezählt.",
   "kategorie": "ALLGEMEIN"
-}
-
-### create 2
-POST localhost:8080/api/jokes
-Content-Type: application/json
-
-{
-  "witz": "Lehrer: „Du hast schon wieder geschlafen!“ Schüler: „Nein, ich hab nur meine Augen aktualisiert.“",
-  "kategorie": "SCHULE"
 }
 
 ### joke of the day
@@ -57,5 +48,6 @@ GET localhost:8080/api/jokes/today
 GET localhost:8080/api/jokes/top
 
 
-
+### delete
+DELETE localhost:8080/api/jokes/2
 

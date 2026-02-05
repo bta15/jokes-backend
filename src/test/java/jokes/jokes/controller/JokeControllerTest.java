@@ -1,5 +1,10 @@
 package jokes.jokes.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jokes.jokes.controller.dto.JokeDto;
+import jokes.jokes.entity.JokeCategory;
+import jokes.jokes.entity.JokeEntity;
 import jokes.jokes.service.JokeExportService;
 import jokes.jokes.service.JokeImportService;
 import jokes.jokes.service.JokeService;
@@ -15,13 +20,17 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(JokeController.class)
@@ -43,7 +52,9 @@ class JokeControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private static final String ID = "1";
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    private static final Long ID = 1L;
 
     private static final String GENERAL_URL = "/api/jokes";
     private static final String EXPORT_URL = "/api/jokes/export/csv";
@@ -82,23 +93,51 @@ class JokeControllerTest {
     }
 
     @Test
-    void getAll() {
-        //TODO
+    void getAll() throws Exception {
+        var expectedResponse = Collections.singletonList(new JokeEntity(ID, "joke", JokeCategory.JOB, 1));
+        when(jokeService.getAllJokes()).thenReturn(expectedResponse);
+        mockMvc.perform(get(GET_ALL_URL)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        verify(jokeService).getAllJokes();
     }
 
     @Test
-    void getRandomByCategory() {
-        //TODO
+    void getRandomByCategory() throws Exception {
+        var expectedResponse = Collections.singletonList(new JokeEntity(ID, "joke", JokeCategory.JOB, 5));
+        when(jokeService.getTop()).thenReturn(expectedResponse);
+        mockMvc.perform(get(TOP_URL)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        verify(jokeService).getTop();
     }
 
     @Test
-    void create() {
-        //TODO
+    void create() throws Exception {
+        var expectedResponse = new JokeEntity(ID, "joke", JokeCategory.JOB, 5);
+        var request = new JokeDto("joke", JokeCategory.JOB);
+        when(jokeService.create(request)).thenReturn(expectedResponse);
+        mockMvc.perform(post(GENERAL_URL)
+                        .content(objectMapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        verify(jokeService).create(any());
     }
 
     @Test
-    void update() {
-        //TODO
+    void update() throws Exception {
+        var expectedResponse = new JokeEntity(ID, "joke", JokeCategory.JOB, null);
+        var request = new JokeDto("joke", JokeCategory.JOB);
+        when(jokeService.update(ID, request)).thenReturn(expectedResponse);
+        mockMvc.perform(put(GENERAL_URL + "/" + ID)
+                        .content(objectMapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        verify(jokeService).update(eq(ID), any());
     }
 
     @Test
