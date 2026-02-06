@@ -30,8 +30,6 @@ public class JokeImportService {
                 .<CsvJoke>readValues(file.getInputStream())
                 .readAll();
 
-        csvJokes.forEach(System.out::println);
-
         List<JokeEntity> newJokeEntityList = new ArrayList<>();
         csvJokes.forEach(newJoke -> {
             if (newJoke.getJoke() != null && !newJoke.getJoke().isEmpty() && jokeRepository.existsByWitz(newJoke.getJoke())) {
@@ -43,6 +41,9 @@ public class JokeImportService {
             jokeEntity.setWitz(newJoke.getJoke());
             newJokeEntityList.add(jokeEntity);
         });
-        jokeRepository.saveAll(newJokeEntityList);
+
+        if (!newJokeEntityList.isEmpty()) {
+            jokeRepository.saveAll(newJokeEntityList);
+        }
     }
 }

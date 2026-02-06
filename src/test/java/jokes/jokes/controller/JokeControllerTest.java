@@ -7,6 +7,7 @@ import jokes.jokes.entity.JokeEntity;
 import jokes.jokes.service.JokeExportService;
 import jokes.jokes.service.JokeImportService;
 import jokes.jokes.service.JokeService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -24,8 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -60,6 +60,11 @@ class JokeControllerTest {
     private static final String LIKE_URL = "/api/jokes/" + ID + "/like";
     private static final String TODAY_URL = "/api/jokes/today";
     private static final String TOP_URL = "/api/jokes/top";
+
+    @AfterEach
+    void tearDown() {
+        verifyNoMoreInteractions(jokeExportService, jokeService, jokeImportService);
+    }
 
 
     @Test
