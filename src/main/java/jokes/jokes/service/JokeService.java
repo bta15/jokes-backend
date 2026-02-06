@@ -4,6 +4,7 @@ import jokes.jokes.controller.dto.JokeDto;
 import jokes.jokes.entity.JokeCategory;
 import jokes.jokes.entity.JokeEntity;
 import jokes.jokes.repository.JokeRepository;
+import jokes.jokes.service.exception.JokeAlreadyExistsException;
 import jokes.jokes.service.exception.JokeNotFoundException;
 import jokes.jokes.util.JokeCategoryUtil;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,11 @@ public class JokeService {
     }
 
     public JokeEntity create(JokeDto jokeDto) {
+        var exists = jokeRepository.existsByWitz(jokeDto.witz());
+        if (exists) {
+            throw new JokeAlreadyExistsException("Joke " + jokeDto.witz() + " already exists");
+        }
+
         JokeEntity jokeEntity = new JokeEntity();
         jokeEntity.setWitz(jokeDto.witz());
         jokeEntity.setKategorie(jokeDto.kategorie());
