@@ -36,7 +36,7 @@ public class JokeExportService {
         CsvMapper mapper = new CsvMapper().configure(CsvGenerator.Feature.STRICT_CHECK_FOR_QUOTING, true);
         CsvSchema schema = mapper.schemaFor(CsvJoke.class).withHeader().withColumnSeparator(';').withLineSeparator("\r\n");
         var csvAsString = mapper.writer(schema).writeValueAsString(csvJokes);
-        log.info(csvAsString);
+
         return new ByteArrayResource(csvAsString.getBytes());// todo check encoding ENCODING_WINDOWS_1252?
     }
 }
