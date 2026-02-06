@@ -149,7 +149,6 @@ class JokeControllerTest {
     @Test
     void like() throws Exception {
         var expectedResponse = new JokeEntity(ID, "joke", JokeCategory.JOB, null);
-        var request = new JokeDto("joke", JokeCategory.JOB);
         when(jokeService.like(ID)).thenReturn(expectedResponse);
         mockMvc.perform(patch(LIKE_URL)
                         .contentType(MediaType.APPLICATION_JSON))
