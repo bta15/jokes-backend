@@ -1,6 +1,5 @@
 package jokes.jokes.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jokes.jokes.controller.dto.JokeDto;
 import jokes.jokes.entity.JokeCategory;
@@ -18,10 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -61,7 +57,7 @@ class JokeControllerTest {
     private static final String IMPORT_URL = "/api/jokes/import/csv";
     private static final String GET_ALL_URL = "/api/jokes/all";
     private static final String GET_RANDOM_URL = "/api/jokes/random";
-    private static final String LIKE_URL = "/api/jokes/" + ID + "/today";
+    private static final String LIKE_URL = "/api/jokes/" + ID + "/like";
     private static final String TODAY_URL = "/api/jokes/today";
     private static final String TOP_URL = "/api/jokes/top";
 
@@ -105,13 +101,14 @@ class JokeControllerTest {
 
     @Test
     void getRandomByCategory() throws Exception {
-        var expectedResponse = Collections.singletonList(new JokeEntity(ID, "joke", JokeCategory.JOB, 5));
-        when(jokeService.getTop()).thenReturn(expectedResponse);
-        mockMvc.perform(get(TOP_URL)
+        var expectedResponse = new JokeEntity(ID, "joke", JokeCategory.JOB, 5);
+        when(jokeService.getRandomJokeByCategory(JokeCategory.JOB)).thenReturn(expectedResponse);
+        mockMvc.perform(get(GET_RANDOM_URL)
+                        .param("category", JokeCategory.JOB.name())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
-        verify(jokeService).getTop();
+        verify(jokeService).getRandomJokeByCategory(any());
     }
 
     @Test
@@ -141,22 +138,45 @@ class JokeControllerTest {
     }
 
     @Test
-    void delete() {
-        //TODO
+    void testDelete() throws Exception {
+        mockMvc.perform(delete(GENERAL_URL + "/" + ID)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent())
+                .andReturn();
+        verify(jokeService).delete(ID);
     }
 
     @Test
-    void like() {
-        //TODO
+    void like() throws Exception {
+        var expectedResponse = new JokeEntity(ID, "joke", JokeCategory.JOB, null);
+        var request = new JokeDto("joke", JokeCategory.JOB);
+        when(jokeService.like(ID)).thenReturn(expectedResponse);
+        mockMvc.perform(patch(LIKE_URL)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        verify(jokeService).like(ID);
     }
 
     @Test
-    void getJokeOfTheDay() {
-        //TODO
+    void getJokeOfTheDay() throws Exception {
+        var expectedResponse = new JokeEntity(ID, "joke", JokeCategory.JOB, 5);
+        when(jokeService.getJokeOfTheDay()).thenReturn(expectedResponse);
+        mockMvc.perform(get(TODAY_URL)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        verify(jokeService).getJokeOfTheDay();
     }
 
     @Test
-    void getTopJokes() {
-        //TODO
+    void getTopJokes() throws Exception {
+        var expectedResponse = Collections.singletonList(new JokeEntity(ID, "joke", JokeCategory.JOB, 5));
+        when(jokeService.getTop()).thenReturn(expectedResponse);
+        mockMvc.perform(get(TOP_URL)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        verify(jokeService).getTop();
     }
 }
