@@ -93,17 +93,32 @@ class JokeServiceTest {
 
     @Test
     void updateJoke_successful() {
-        //TODO
+        when(repository.findById(anyLong())).thenReturn(Optional.of(new JokeEntity()));
+        when(repository.save(any())).thenReturn(new JokeEntity());
+
+        var upated = jokeService.update(ID, new JokeDto("joke", JokeCategory.JOB));
+
+        assertNotNull(upated);
+        verify(repository, times(1)).save(any());
+        verify(repository, times(1)).findById(anyLong());
     }
 
     @Test
     void updateJoke_exception() {
-        //TODO
+        when(repository.findById(anyLong())).thenReturn(Optional.empty());
+
+        assertThrows(JokeNotFoundException.class, () -> {
+            jokeService.update(ID, new JokeDto("joke", JokeCategory.JOB));
+        });
+
+        verify(repository, times(1)).findById(anyLong());
     }
 
     @Test
     void deleteJoke_successful() {
+        jokeService.delete(ID);
 
+        verify(repository, times(1)).deleteById(anyLong());
     }
 
     @Test
@@ -118,26 +133,51 @@ class JokeServiceTest {
 
     @Test
     void getTop() {
-        //TODO
+        when(repository.findTop5ByOrderByLikesDesc()).thenReturn(Collections.singletonList(new JokeEntity()));
+
+        var topJokes = jokeService.getTop();
+
+        assertNotNull(topJokes);
+        verify(repository, times(1)).findTop5ByOrderByLikesDesc();
     }
 
     @Test
     void getRandomJokeByCategory_successful() {
-        //TODO
+        when(repository.findAllByKategorie(JokeCategory.JOB)).thenReturn(Collections.singletonList(new JokeEntity()));
+
+        var randomJoke = jokeService.getRandomJokeByCategory(JokeCategory.JOB);
+
+        assertNotNull(randomJoke);
+        verify(repository, times(1)).findAllByKategorie(JokeCategory.JOB);
     }
 
     @Test
     void getRandomJokeByCategory_exception() {
-        //TODO
+        when(repository.findAllByKategorie(JokeCategory.JOB)).thenReturn(Collections.emptyList());
+
+        assertThrows(JokeNotFoundException.class, () -> {
+            jokeService.getRandomJokeByCategory(JokeCategory.JOB);
+        });
+        verify(repository, times(1)).findAllByKategorie(JokeCategory.JOB);
     }
 
     @Test
     void getJokeOfTheDay_successful() {
-        //TODO
+        when(repository.findAllByKategorie(any())).thenReturn(Collections.singletonList(new JokeEntity()));
+
+        var jokeOfTheDay = jokeService.getJokeOfTheDay();
+
+        assertNotNull(jokeOfTheDay);
+        verify(repository, times(1)).findAllByKategorie(any());
     }
 
     @Test
     void getJokeOfTheDay_exception() {
-        //TODO
+        when(repository.findAllByKategorie(any())).thenReturn(Collections.emptyList());
+
+        assertThrows(JokeNotFoundException.class, () -> {
+            jokeService.getJokeOfTheDay();
+        });
+        verify(repository, times(1)).findAllByKategorie(any());
     }
 }
