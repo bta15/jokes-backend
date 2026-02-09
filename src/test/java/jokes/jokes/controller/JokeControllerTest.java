@@ -33,6 +33,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 class JokeControllerTest {
 
+    private static final Long ID = 1L;
+    private static final String GENERAL_URL = "/api/jokes";
+    private static final String EXPORT_URL = "/api/jokes/export/csv";
+    private static final String IMPORT_URL = "/api/jokes/import/csv";
+    private static final String GET_ALL_URL = "/api/jokes/all";
+    private static final String GET_RANDOM_URL = "/api/jokes/random";
+    private static final String LIKE_URL = "/api/jokes/" + ID + "/like";
+    private static final String TODAY_URL = "/api/jokes/today";
+    private static final String TOP_URL = "/api/jokes/top";
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     @Autowired
     private JokeController jokeController;
 
@@ -47,19 +58,6 @@ class JokeControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
-    private static final Long ID = 1L;
-
-    private static final String GENERAL_URL = "/api/jokes";
-    private static final String EXPORT_URL = "/api/jokes/export/csv";
-    private static final String IMPORT_URL = "/api/jokes/import/csv";
-    private static final String GET_ALL_URL = "/api/jokes/all";
-    private static final String GET_RANDOM_URL = "/api/jokes/random";
-    private static final String LIKE_URL = "/api/jokes/" + ID + "/like";
-    private static final String TODAY_URL = "/api/jokes/today";
-    private static final String TOP_URL = "/api/jokes/top";
 
     @AfterEach
     void tearDown() {
